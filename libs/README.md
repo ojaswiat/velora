@@ -1,0 +1,1 @@
+# For stand-alone constants, utilities, and types that don't depend on the Nuxt runtime (like composables) example plugins (pure Vue apps).
