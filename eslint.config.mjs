@@ -1,5 +1,4 @@
 // @ts-check
-
 import antfu from "@antfu/eslint-config";
 // @ts-ignore -- Missing type declarations
 import pluginESx from "eslint-plugin-es-x";
@@ -20,7 +19,6 @@ export default antfu(
     {
         // https://eslint-plugin-perfectionist.azat.io/
         lessOpinionated: false,
-
         formatters: {
             /**
              * Format CSS, LESS, SCSS files, also the `<style>` blocks in Vue
@@ -40,7 +38,6 @@ export default antfu(
             markdown: "prettier",
             graphql: "prettier",
         },
-
         // https://eslint.org/
         javascript: {
             overrides: {
@@ -51,11 +48,8 @@ export default antfu(
                     },
                 ],
             },
-
         },
-
         jsonc: true,
-
         // https://typescript-eslint.io/
         typescript: {
             overrides: {
@@ -64,13 +58,11 @@ export default antfu(
                 "ts/consistent-type-definitions": "off",
             },
         },
-
         vue: {
             overrides: {
                 "vue/block-order": ["error", {
                     order: [["script", "template"], "style"],
                 }],
-
                 "vue/html-closing-bracket-newline": ["error", {
                     multiline: "never",
                     selfClosingTag: {
@@ -79,7 +71,6 @@ export default antfu(
                     },
                     singleline: "never",
                 }],
-
                 "vue/html-self-closing": ["error", {
                     html: {
                         component: "always",
@@ -87,7 +78,6 @@ export default antfu(
                         void: "never",
                     },
                 }],
-
                 "vue/max-attributes-per-line": ["error", {
                     multiline: {
                         max: 1,
@@ -98,7 +88,6 @@ export default antfu(
                 }],
             },
         },
-
         stylistic: {
             indent: 4,
             overrides: {
@@ -108,7 +97,6 @@ export default antfu(
             quotes: "double",
             semi: true,
         },
-
         yaml: {
             overrides: {
                 "yml/indent": ["error", 4, {
@@ -117,19 +105,14 @@ export default antfu(
                 }],
             },
         },
-
         // https://unocss.dev/integrations/eslint
         unocss: false,
     },
-
     // https://eslint-community.github.io/eslint-plugin-es-x/
     pluginESx.configs["flat/restrict-to-es2024"],
-
     // https://github.com/eslint-community/eslint-plugin-promise
     pluginPromise.configs["flat/recommended"],
-
     // Node security related rules
-
     // https://github.com/eslint-community/eslint-plugin-security
     {
         files: ["**/*.{js,jsx,ts,tsx,mjs,cjs}"],
@@ -137,9 +120,7 @@ export default antfu(
             security: pluginSecurity,
         },
         rules: pluginSecurity.configs.recommended.rules,
-
     },
-
     // https://github.com/gkouziik/eslint-plugin-security-node
     {
         files: ["**/*.{js,jsx,ts,tsx,mjs,cjs}"],
@@ -152,7 +133,6 @@ export default antfu(
             ),
         )),
     },
-
     // Custom overrides
     {
         rules: {
@@ -161,7 +141,6 @@ export default antfu(
             "no-console": ["error", { allow: ["warn", "error", "info"] }],
         },
     },
-
     {
         files: ["libs/shared-utils/**/*.ts", "apps/sc-base/server/**/*.ts"],
         plugins: {
@@ -171,7 +150,6 @@ export default antfu(
             "import-x/no-extraneous-dependencies": ["error"],
         },
     },
-
     // config with just ignores is the replacement for `.eslintignore`.
     // antfu config Reads from ".gitignore".
     // Add only those things here that are not in .gitignore
@@ -182,7 +160,6 @@ export default antfu(
     //         "**/certs/**",
     //     ],
     // },
-
     // Workaround for type mismatch between oxlint and antfu configs
     // See: https://github.com/antfu/eslint-config/issues/255
     // TODO: This can be removed once oxlint adds proper type support for flat configs

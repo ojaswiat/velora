@@ -13,11 +13,19 @@ export default defineNuxtConfig({
     // Modules
     modules: [
         "@unocss/nuxt",
+
+        [
+            "@nuxt/eslint",
+            {
+                config: {
+                    standalone: false,
+                },
+            },
+        ],
     ],
 
     // Module configurations
     unocss: {
         nuxtLayers: true,
     },
-
 });

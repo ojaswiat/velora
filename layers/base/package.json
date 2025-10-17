@@ -20,7 +20,7 @@
         "lint:d": "pnpm eslint:d",
         "lint:fix": "pnpm oxlint:ts:fix && pnpm oxlint:fix && pnpm eslint:fix",
         "lint:inspect": "oxlint --print-config && pnpm @eslint/config-inspector build && pnpm serve .eslint-config-inspector",
-        "postinstall": "nuxt prepare",
+        "postinstall": "nuxt prepare && nuxt prepare .playground",
         "typecheck": "nuxt prepare && vue-tsc -b --noEmit",
         "clean": "rm -rf dist && nuxt cleanup"
     },
