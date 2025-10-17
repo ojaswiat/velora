@@ -3,19 +3,27 @@
     "type": "module",
     "private": true,
     "module": "index.ts",
+    "workspaces": [
+        "apps/*",
+        "layers/*",
+        "libs/*",
+        "plugins/*"
+    ],
     "scripts": {
         "lint:inspect": "oxlint --print-config && bunx @eslint/config-inspector build && bunx serve .eslint-config-inspector",
-        "typecheck": "pnpm -r --filter='./apps/**/*' --filter='./layers/**/*' run typecheck",
-        "oxlint": "oxlint --quiet --format=stylish",
-        "oxlint:fix": "oxlint --quiet --fix --format=stylish",
-        "oxlint:ts": "pnpm -r --filter='./apps/**/*' --filter='./layers/**/*' run oxlint:ts",
-        "oxlint:ts:fix": "pnpm -r --filter='./apps/**/*' --filter='./layers/**/*' run oxlint:ts:fix",
-        "eslint": "eslint --format=stylish",
-        "eslint:d": "eslint --debug --format=stylish",
-        "eslint:fix": "eslint --fix --format=stylish",
-        "lint": "pnpm oxlint:ts && pnpm oxlint && pnpm eslint",
-        "lint:d": "pnpm oxlint:ts && pnpm oxlint && pnpm eslint:d",
-        "lint:fix": "pnpm oxlint:ts:fix && pnpm oxlint:fix && pnpm eslint:fix"
+        "typecheck": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run typecheck",
+        "oxlint": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run oxlint",
+        "oxlint:fix": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run oxlint:fix",
+        "oxlint:ts": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run oxlint:ts",
+        "oxlint:ts:fix": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run oxlint:ts:fix",
+        "eslint": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run eslint",
+        "eslint:d": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run eslint:d",
+        "eslint:fix": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run eslint:fix",
+        "lint": "bun oxlint:ts && bun oxlint && bun eslint",
+        "lint:d": "bun oxlint:ts && bun oxlint && bun eslint:d",
+        "lint:fix": "bun oxlint:ts:fix && bun oxlint:fix && bun eslint:fix",
+        "clean": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run clean",
+        "clean:all": "bun clean && find . -name 'node_modules' -type d -prune -exec rm -rf {} +"
     },
     "peerDependencies": {
         "typescript": "^5"

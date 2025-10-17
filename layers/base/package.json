@@ -16,19 +16,16 @@
         "oxlint:fix": "oxlint --quiet --fix --format=stylish",
         "oxlint:ts": "oxlint '**/*.{ts,mts,cts,vue}' --type-aware --quiet --format=stylish",
         "oxlint:ts:fix": "oxlint '**/*.{ts,mts,cts,vue}' --type-aware --quiet --fix --format=stylish",
-        "lint": "pnpm oxlint:ts && pnpm oxlint && pnpm eslint",
-        "lint:d": "pnpm eslint:d",
-        "lint:fix": "pnpm oxlint:ts:fix && pnpm oxlint:fix && pnpm eslint:fix",
-        "lint:inspect": "oxlint --print-config && pnpm @eslint/config-inspector build && pnpm serve .eslint-config-inspector",
-        "postinstall": "nuxt prepare && nuxt prepare .playground",
+        "lint": "bun oxlint:ts && bun oxlint && bun eslint",
+        "lint:d": "bun eslint:d",
+        "lint:fix": "bun oxlint:ts:fix && bun oxlint:fix && bun eslint:fix",
+        "lint:inspect": "oxlint --print-config && bunx @eslint/config-inspector build && bunx serve .eslint-config-inspector",
+        "postinstall": "nuxt prepare .playground",
         "typecheck": "nuxt prepare && vue-tsc -b --noEmit",
         "clean": "rm -rf dist && nuxt cleanup"
     },
     "devDependencies": {
-        "@nuxt/eslint": "latest",
-        "eslint": "^9.37.0",
         "nuxt": "^4.1.3",
-        "typescript": "^5.9.3",
         "vue": "latest"
     }
 }
