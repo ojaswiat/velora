@@ -1,4 +1,12 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { createResolver } from "@nuxt/kit";
+
+const { resolve } = createResolver(import.meta.url);
+
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-})
+    alias: {
+        "#velora-auth": resolve("."),
+    },
+    compatibilityDate: "2025-10-17",
+    devtools: { enabled: true },
+    extends: [resolve("../base")],
+});

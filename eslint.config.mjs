@@ -1,0 +1,193 @@
+// @ts-check
+
+import antfu from "@antfu/eslint-config";
+// @ts-ignore -- Missing type declarations
+import pluginESx from "eslint-plugin-es-x";
+// @ts-ignore -- Missing type declarations
+import pluginImport from "eslint-plugin-import-x";
+import oxlint from "eslint-plugin-oxlint";
+// @ts-ignore -- Missing type declarations
+import pluginPromise from "eslint-plugin-promise";
+// @ts-ignore -- Missing type declarations
+import pluginSecurity from "eslint-plugin-security";
+// @ts-ignore -- Missing type declarations
+import securityNode from "eslint-plugin-security-node";
+
+// baseConfig: https://github.com/antfu/eslint-config
+// Node Config: https://github.com/eslint-community/eslint-plugin-n
+// JSON Config: https://github.com/ota-meshi/eslint-plugin-jsonc
+export default antfu(
+    {
+        // https://eslint-plugin-perfectionist.azat.io/
+        lessOpinionated: false,
+
+        formatters: {
+            /**
+             * Format CSS, LESS, SCSS files, also the `<style>` blocks in Vue
+             * By default uses Prettier
+             */
+            css: true,
+            /**
+             * Format HTML files
+             * By default uses Prettier
+             */
+            html: true,
+            /**
+             * Format Markdown files
+             * Supports Prettier and dprint
+             * By default uses Prettier
+             */
+            markdown: "prettier",
+            graphql: "prettier",
+        },
+
+        // https://eslint.org/
+        javascript: {
+            overrides: {
+                "prefer-const": [
+                    "warn",
+                    {
+                        destructuring: "all",
+                    },
+                ],
+            },
+
+        },
+
+        jsonc: true,
+
+        // https://typescript-eslint.io/
+        typescript: {
+            overrides: {
+                // Disabled in favor of oxlint handling the same rule to avoid conflicts
+                "no-undef": "off",
+                "ts/consistent-type-definitions": "off",
+            },
+        },
+
+        vue: {
+            overrides: {
+                "vue/block-order": ["error", {
+                    order: [["script", "template"], "style"],
+                }],
+
+                "vue/html-closing-bracket-newline": ["error", {
+                    multiline: "never",
+                    selfClosingTag: {
+                        multiline: "always",
+                        singleline: "never",
+                    },
+                    singleline: "never",
+                }],
+
+                "vue/html-self-closing": ["error", {
+                    html: {
+                        component: "always",
+                        normal: "never",
+                        void: "never",
+                    },
+                }],
+
+                "vue/max-attributes-per-line": ["error", {
+                    multiline: {
+                        max: 1,
+                    },
+                    singleline: {
+                        max: 1,
+                    },
+                }],
+            },
+        },
+
+        stylistic: {
+            indent: 4,
+            overrides: {
+                "style/arrow-parens": ["error", "always"],
+                "style/brace-style": ["error", "1tbs"],
+            },
+            quotes: "double",
+            semi: true,
+        },
+
+        yaml: {
+            overrides: {
+                "yml/indent": ["error", 4, {
+                    indentBlockSequences: true,
+                    indicatorValueIndent: 2,
+                }],
+            },
+        },
+
+        // https://unocss.dev/integrations/eslint
+        unocss: false,
+    },
+
+    // https://eslint-community.github.io/eslint-plugin-es-x/
+    pluginESx.configs["flat/restrict-to-es2024"],
+
+    // https://github.com/eslint-community/eslint-plugin-promise
+    pluginPromise.configs["flat/recommended"],
+
+    // Node security related rules
+
+    // https://github.com/eslint-community/eslint-plugin-security
+    {
+        files: ["**/*.{js,jsx,ts,tsx,mjs,cjs}"],
+        plugins: {
+            security: pluginSecurity,
+        },
+        rules: pluginSecurity.configs.recommended.rules,
+
+    },
+
+    // https://github.com/gkouziik/eslint-plugin-security-node
+    {
+        files: ["**/*.{js,jsx,ts,tsx,mjs,cjs}"],
+        plugins: {
+            "security-node": securityNode,
+        },
+        rules: /** @type {any} */ (Object.fromEntries(
+            Object.entries(securityNode.configs.recommended.rules).map(
+                ([key, value]) => [key, value === "error" || value === "warn" ? [value] : value],
+            ),
+        )),
+    },
+
+    // Custom overrides
+    {
+        rules: {
+            "antfu/no-top-level-await": "off",
+            "curly": ["error", "all"],
+            "no-console": ["error", { allow: ["warn", "error", "info"] }],
+        },
+    },
+
+    {
+        files: ["libs/shared-utils/**/*.ts", "apps/sc-base/server/**/*.ts"],
+        plugins: {
+            "import-x": pluginImport,
+        },
+        rules: {
+            "import-x/no-extraneous-dependencies": ["error"],
+        },
+    },
+
+    // config with just ignores is the replacement for `.eslintignore`.
+    // antfu config Reads from ".gitignore".
+    // Add only those things here that are not in .gitignore
+    // {
+    //     ignores: [
+    //         "**/node_modules/**",
+    //         "**/dist/**",
+    //         "**/certs/**",
+    //     ],
+    // },
+
+    // Workaround for type mismatch between oxlint and antfu configs
+    // See: https://github.com/antfu/eslint-config/issues/255
+    // TODO: This can be removed once oxlint adds proper type support for flat configs
+    ...oxlint.buildFromOxlintConfigFile("./.oxlintrc.json").map((config) => ({
+        ...config,
+        languageOptions: { ...config.languageOptions, [Symbol.iterator]: undefined },
+    })),
+);

@@ -1,21 +1,34 @@
 {
-  "name": "auth",
-  "type": "module",
-  "version": "0.0.1",
-  "main": "./nuxt.config.ts",
-  "scripts": {
-    "dev": "nuxi dev .playground",
-    "dev:prepare": "nuxt prepare .playground",
-    "build": "nuxt build .playground",
-    "generate": "nuxt generate .playground",
-    "preview": "nuxt preview .playground",
-    "lint": "eslint ."
-  },
-  "devDependencies": {
-    "@nuxt/eslint": "latest",
-    "eslint": "^9.37.0",
-    "nuxt": "^4.1.3",
-    "typescript": "^5.9.3",
-    "vue": "latest"
-  }
+    "name": "auth",
+    "type": "module",
+    "version": "0.0.1",
+    "main": "./nuxt.config.ts",
+    "scripts": {
+        "dev": "nuxi dev .playground",
+        "dev:prepare": "nuxt prepare .playground",
+        "build": "nuxt build .playground",
+        "generate": "nuxt generate .playground",
+        "preview": "nuxt preview .playground",
+        "eslint": "eslint --format=stylish",
+        "eslint:d": "eslint --debug --format=stylish",
+        "eslint:fix": "eslint --fix --format=stylish",
+        "oxlint": "oxlint --quiet --format=stylish",
+        "oxlint:fix": "oxlint --quiet --fix --format=stylish",
+        "oxlint:ts": "oxlint '**/*.{ts,mts,cts,vue}' --type-aware --quiet --format=stylish",
+        "oxlint:ts:fix": "oxlint '**/*.{ts,mts,cts,vue}' --type-aware --quiet --fix --format=stylish",
+        "lint": "pnpm oxlint:ts && pnpm oxlint && pnpm eslint",
+        "lint:d": "pnpm eslint:d",
+        "lint:fix": "pnpm oxlint:ts:fix && pnpm oxlint:fix && pnpm eslint:fix",
+        "lint:inspect": "oxlint --print-config && pnpm @eslint/config-inspector build && pnpm serve .eslint-config-inspector",
+        "postinstall": "nuxt prepare",
+        "typecheck": "nuxt prepare && vue-tsc -b --noEmit",
+        "clean": "rm -rf dist && nuxt cleanup"
+    },
+    "devDependencies": {
+        "@nuxt/eslint": "latest",
+        "eslint": "^9.37.0",
+        "nuxt": "^4.1.3",
+        "typescript": "^5.9.3",
+        "vue": "latest"
+    }
 }

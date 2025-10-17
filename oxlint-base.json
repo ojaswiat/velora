@@ -1,0 +1,27 @@
+{
+    "plugins": [
+        "promise",
+        "typescript",
+        "unicorn",
+        "oxc",
+        "node",
+        "import",
+        "jsdoc"
+    ],
+    "rules": {
+        "unicorn/numeric-separators-style": [
+            "error",
+            {
+                "onlyIfContainsSeparator": true
+            }
+        ],
+        "yoda": "off",
+        "typescript/consistent-type-definitions": [
+            "error",
+            "type"
+        ],
+        "sort-imports": "off",
+        "unicorn/no-null": "off",
+        "no-rest-spread-properties": "off"
+    }
+}
