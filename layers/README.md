@@ -1,4 +1,5 @@
 # Layers folder for storing all layers
 
-1. Base layer - common code among all apps - mostly UI
-2. Auth layer - for common auth related things - mostly server + UI auth pages, which extends the base layer for client side shared code
+1. Base layer - Common code and Nuxt config (ex: UnoCSS) for UI and Client. Affects Auth and other apps.
+2. Common layer - Common code for all the Apps - Types, Constants, Composables, Services, Stores, etc. Affects only the apps.
+3. We don't want to put everything in the base layer to get extended by the Auth app.
