@@ -33,4 +33,13 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # Finder (MacOS) folder config
 .DS_Store
 
+# Nuxt
+.nuxt
+.output
+.data
+.nitro
+**/.playground/.nuxt
+**/.playground/.output
+
+# ESLint
 .eslint-config-inspector
