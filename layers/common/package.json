@@ -17,7 +17,7 @@
         "lint:fix": "bun eslint:fix",
         "lint:inspect": "bunx @eslint/config-inspector build && bunx serve .eslint-config-inspector",
         "postinstall": "nuxt prepare .playground",
-        "typecheck": "nuxt prepare && vue-tsc -b --noEmit",
+        "typecheck": "nuxt prepare .playground && vue-tsc -b --noEmit",
         "clean": "rm -rf dist && nuxt cleanup"
     },
     "devDependencies": {

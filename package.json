@@ -11,18 +11,22 @@
     ],
     "scripts": {
         "lint:inspect": "bunx @eslint/config-inspector build && bunx serve .eslint-config-inspector",
-        "typecheck": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run typecheck",
-        "eslint": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run eslint",
-        "eslint:d": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run eslint:d",
-        "eslint:fix": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run eslint:fix",
+        "typecheck": "bun run --filter='./apps/*' --filter='./layers/*' --filter='./libs/*' --filter='./plugins/*' typecheck",
+        "eslint": "bun run --filter='./apps/*' --filter='./layers/*' --filter='./libs/*' --filter='./plugins/*' eslint",
+        "eslint:d": "bun run --filter='./apps/*' --filter='./layers/*' --filter='./libs/*' --filter='./plugins/*' eslint:d",
+        "eslint:fix": "bun run --filter='./apps/*' --filter='./layers/*' --filter='./libs/*' --filter='./plugins/*' eslint:fix",
         "lint": "bun eslint",
         "lint:d": "bun eslint:d",
         "lint:fix": "bun eslint:fix",
-        "clean": "bun -r --filter='./apps/**/*' --filter='./layers/**/*' --filter='./libs/**/*' --filter='./plugins/**/*' run clean",
+        "clean": "bun run --filter='./apps/*' --filter='./layers/*' --filter='./libs/*' --filter='./plugins/*' clean",
         "clean:all": "bun clean && find . -name 'node_modules' -type d -prune -exec rm -rf {} +"
     },
     "peerDependencies": {
         "typescript": "^5"
+    },
+    "dependencies": {
+        "@pinia/nuxt": "^0.11.2",
+        "pinia": "^3.0.3"
     },
     "devDependencies": {
         "@antfu/eslint-config": "^6.0.0",

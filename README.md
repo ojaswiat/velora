@@ -34,9 +34,13 @@ apps/
     ├── nuxt.config.ts      # App-specific Nuxt configuration
     ├── package.json        # App-specific dependencies
     ├── app.vue             # Root Vue component
-    ├── components/         # App-specific components
-    ├── composables/        # App-specific composables
-    └── pages/              # App routes (if using)
+    └── app/                # App directory (recommended pattern)
+        ├── components/     # App-specific components
+        ├── composables/    # App-specific composables
+        ├── stores/         # Pinia stores (app-level)
+        ├── pages/          # App routes
+        ├── middleware/     # Route middleware
+        └── utils/          # Utility functions
 ```
 
 **Key Characteristics:**
@@ -47,7 +51,7 @@ apps/
 
 **Current Apps:**
 
-- `auth`: Authentication application
+- `auth`: Authentication application with Pinia state management example
 
 ### `layers/` - Nuxt Layers
 
@@ -75,8 +79,9 @@ The foundational layer that provides core UI configurations and tools.
 **Contains:**
 
 - UnoCSS configuration (`uno.config.ts`)
-- Base components for UI elements
+- Base components for UI elements (e.g., `Logo.vue`)
 - Core ESLint setup with `@nuxt/eslint`
+- Pinia state management setup (`@pinia/nuxt`)
 - Shared Nuxt module configurations
 
 **When to Use:**
@@ -104,7 +109,7 @@ Extends the base layer and provides shared business logic and utilities.
 - TypeScript type definitions
 - Constants and enums
 - Service layers
-- Store definitions (Pinia/other)
+- Shared Pinia stores for cross-app state
 
 **When to Use:**
 
@@ -414,8 +419,21 @@ export default defineNuxtConfig({
         "#your-app": resolve("."),
     },
     compatibilityDate: "2025-10-17",
+    components: [
+        {
+            path: resolve("./app/components"),
+            pathPrefix: false,
+        },
+    ],
     devtools: { enabled: true },
     extends: [resolve("../../layers/base")],
+    imports: {
+        dirs: [
+            resolve("./app/stores/**"),
+            resolve("./app/composables/**"),
+            resolve("./app/utils/**"),
+        ],
+    },
 });
 ```
 
@@ -633,11 +651,104 @@ velora/
 - Don't commit `node_modules/`, `.nuxt/`, `dist/`
 - Use conventional commits for clear history
 
+## 🗄️ State Management with Pinia
+
+This monorepo includes [Pinia](https://pinia.vuejs.org/) for state management, configured in the base layer and available to all apps.
+
+### Store Organization
+
+Stores can be organized at different levels based on their scope:
+
+**App-Level Stores** (`apps/*/app/stores/`)
+
+- Specific to a single application
+- Not shared across apps
+- Auto-imported within the app
+
+**Layer-Level Stores** (`layers/common/app/stores/`)
+
+- Shared across multiple apps that extend the common layer
+- Ideal for cross-app state (e.g., user authentication, theme preferences)
+- Auto-imported in all extending apps
+
+### Creating a Store
+
+Stores use Pinia's composition API style with the setup function pattern:
+
+```typescript
+// apps/auth/app/stores/CounterStore.ts
+export const useCounterStore = defineStore("counter", () => {
+    // State
+    const count = ref(0);
+
+    // Getters
+    const doubleCount = computed(() => count.value * 2);
+
+    // Actions
+    function increment() {
+        count.value++;
+    }
+
+    function decrement() {
+        count.value--;
+    }
+
+    function reset() {
+        count.value = 0;
+    }
+
+    return {
+        count,
+        decrement,
+        doubleCount,
+        increment,
+        reset,
+    };
+});
+```
+
+### Using Stores in Components
+
+Stores are auto-imported and can be used directly in components:
+
+```vue
+<template>
+    <div>
+        <p>Count: {{ counterStore.count }}</p>
+        <p>Double: {{ counterStore.doubleCount }}</p>
+        <button @click="counterStore.increment">
+            Increment
+        </button>
+    </div>
+</template>
+
+<script setup lang="ts">
+const counterStore = useCounterStore();
+</script>
+```
+
+### Store Features
+
+- **Auto-imports**: All stores are automatically imported - no manual imports needed
+- **TypeScript Support**: Full type inference and autocomplete
+- **DevTools**: Pinia DevTools integration for debugging
+- **SSR Support**: Works seamlessly with Nuxt's server-side rendering
+- **Hot Module Replacement**: Stores preserve state during development
+
+### Best Practices
+
+1. **Naming Convention**: Use `use[Name]Store` pattern (e.g., `useUserStore`, `useCartStore`)
+2. **Store Scope**: Keep app-specific stores in apps, shared stores in layers
+3. **Composition API**: Prefer the setup syntax for better TypeScript support
+4. **Modularity**: Split large stores into smaller, focused stores
+5. **Actions for Logic**: Put business logic in actions, not in components
+
 ## 🛠️ Technology Stack
 
 - **Runtime & Package Manager**: [Bun](https://bun.sh)
 - **Framework**: [Nuxt 4](https://nuxt.com)
 - **UI Framework**: [Vue 3](https://vuejs.org)
+- **State Management**: [Pinia](https://pinia.vuejs.org)
 - **Styling**: [UnoCSS](https://unocss.dev)
 - **Linting**: [ESLint](https://eslint.org) with [@antfu/eslint-config](https://github.com/antfu/eslint-config)
 - **Type Checking**: [TypeScript 5](https://www.typescriptlang.org) with [vue-tsc](https://github.com/vuejs/language-tools)
@@ -647,6 +758,7 @@ velora/
 - [Nuxt Layers Documentation](https://nuxt.com/docs/guide/going-further/layers)
 - [Bun Workspaces](https://bun.sh/docs/install/workspaces)
 - [Nuxt 4 Release Notes](https://nuxt.com/docs/getting-started/upgrade)
+- [Pinia Documentation](https://pinia.vuejs.org)
 - [UnoCSS Documentation](https://unocss.dev)
 
 ## 🤝 Contributing

@@ -3,16 +3,28 @@ import { createResolver } from "@nuxt/kit";
 const { resolve } = createResolver(import.meta.url);
 
 export default defineNuxtConfig({
-    devtools: { enabled: true },
-    compatibilityDate: "2025-10-17",
-
     alias: {
         "#base": resolve("."),
+    },
+    compatibilityDate: "2025-10-17",
+
+    devtools: { enabled: true },
+
+    imports: {
+        dirs: [
+            resolve("./app/libs/**/*"),
+            resolve("./app/services/**"),
+            resolve("./app/stores/**"),
+            resolve("./app/components/**"),
+            resolve("./app/middleware/**"),
+            resolve("./app/utils/**"),
+        ],
     },
 
     // Modules
     modules: [
         "@unocss/nuxt",
+        "@pinia/nuxt",
 
         [
             "@nuxt/eslint",
@@ -28,4 +40,5 @@ export default defineNuxtConfig({
     unocss: {
         nuxtLayers: true,
     },
+
 });

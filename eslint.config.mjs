@@ -67,7 +67,7 @@ export default antfu(
         vue: {
             overrides: {
                 "vue/block-order": ["error", {
-                    order: [["script", "template"], "style"],
+                    order: ["template", "script", "style"],
                 }],
                 "vue/html-closing-bracket-newline": ["error", {
                     multiline: "never",
@@ -143,11 +143,31 @@ export default antfu(
     // config with just ignores is the replacement for `.eslintignore`.
     // antfu config Reads from ".gitignore".
     // Add only those things here that are not in .gitignore
-    // {
-    //     ignores: [
-    //         "**/node_modules/**",
-    //         "**/dist/**",
-    //         "**/certs/**",
-    //     ],
-    // },
+    {
+        ignores: [
+            // Dependencies
+            "**/node_modules/**",
+            // Build outputs
+            "**/dist/**",
+            "**/*.tgz",
+            // Nuxt generated files
+            "**/.nuxt/**",
+            "**/.output/**",
+            // Playground directories
+            "**/.playground/**",
+            // Cache and temporary files
+            "**/.cache/**",
+            "**/*.tsbuildinfo",
+            "**/.eslintcache",
+            // Coverage
+            "**/coverage/**",
+            "**/*.lcov",
+            // Logs
+            "**/logs/**",
+            "**/*.log",
+            // Environment files
+            "**/.env",
+            "**/.env.*",
+        ],
+    },
 );
