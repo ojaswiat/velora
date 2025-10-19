@@ -3,9 +3,6 @@ import antfu from "@antfu/eslint-config";
 // @ts-ignore -- Missing type declarations
 import pluginESx from "eslint-plugin-es-x";
 // @ts-ignore -- Missing type declarations
-import pluginImport from "eslint-plugin-import-x";
-import oxlint from "eslint-plugin-oxlint";
-// @ts-ignore -- Missing type declarations
 import pluginPromise from "eslint-plugin-promise";
 // @ts-ignore -- Missing type declarations
 import pluginSecurity from "eslint-plugin-security";
@@ -17,8 +14,6 @@ import securityNode from "eslint-plugin-security-node";
 // JSON Config: https://github.com/ota-meshi/eslint-plugin-jsonc
 export default antfu(
     {
-        // https://eslint-plugin-perfectionist.azat.io/
-        lessOpinionated: false,
         formatters: {
             /**
              * Format CSS, LESS, SCSS files, also the `<style>` blocks in Vue
@@ -36,7 +31,6 @@ export default antfu(
              * By default uses Prettier
              */
             markdown: "prettier",
-            graphql: "prettier",
         },
         // https://eslint.org/
         javascript: {
@@ -50,14 +44,26 @@ export default antfu(
             },
         },
         jsonc: true,
+        // https://eslint-plugin-perfectionist.azat.io/
+        lessOpinionated: false,
+        stylistic: {
+            indent: 4,
+            overrides: {
+                "style/arrow-parens": ["error", "always"],
+                "style/brace-style": ["error", "1tbs"],
+            },
+            quotes: "double",
+            semi: true,
+        },
         // https://typescript-eslint.io/
         typescript: {
             overrides: {
-                // Disabled in favor of oxlint handling the same rule to avoid conflicts
                 "no-undef": "off",
                 "ts/consistent-type-definitions": "off",
             },
         },
+        // https://unocss.dev/integrations/eslint
+        unocss: false,
         vue: {
             overrides: {
                 "vue/block-order": ["error", {
@@ -88,15 +94,6 @@ export default antfu(
                 }],
             },
         },
-        stylistic: {
-            indent: 4,
-            overrides: {
-                "style/arrow-parens": ["error", "always"],
-                "style/brace-style": ["error", "1tbs"],
-            },
-            quotes: "double",
-            semi: true,
-        },
         yaml: {
             overrides: {
                 "yml/indent": ["error", 4, {
@@ -105,8 +102,6 @@ export default antfu(
                 }],
             },
         },
-        // https://unocss.dev/integrations/eslint
-        unocss: false,
     },
     // https://eslint-community.github.io/eslint-plugin-es-x/
     pluginESx.configs["flat/restrict-to-es2024"],
@@ -139,15 +134,10 @@ export default antfu(
             "antfu/no-top-level-await": "off",
             "curly": ["error", "all"],
             "no-console": ["error", { allow: ["warn", "error", "info"] }],
-        },
-    },
-    {
-        files: ["libs/shared-utils/**/*.ts", "apps/sc-base/server/**/*.ts"],
-        plugins: {
-            "import-x": pluginImport,
-        },
-        rules: {
-            "import-x/no-extraneous-dependencies": ["error"],
+            "perfectionist/sort-objects": ["error", {
+                order: "asc",
+                type: "alphabetical",
+            }],
         },
     },
     // config with just ignores is the replacement for `.eslintignore`.
@@ -160,11 +150,4 @@ export default antfu(
     //         "**/certs/**",
     //     ],
     // },
-    // Workaround for type mismatch between oxlint and antfu configs
-    // See: https://github.com/antfu/eslint-config/issues/255
-    // TODO: This can be removed once oxlint adds proper type support for flat configs
-    ...oxlint.buildFromOxlintConfigFile("./.oxlintrc.json").map((config) => ({
-        ...config,
-        languageOptions: { ...config.languageOptions, [Symbol.iterator]: undefined },
-    })),
 );

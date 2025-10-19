@@ -73,15 +73,7 @@
             "severity": "off"
         },
         {
-            "rule": "*-order",
-            "severity": "off"
-        },
-        {
             "rule": "*-dangle",
-            "severity": "off"
-        },
-        {
-            "rule": "*-newline",
             "severity": "off"
         },
         {
@@ -212,6 +204,5 @@
             "stash": true
         }
     },
-    "search.useIgnoreFiles": false,
-    "oxc.enable": true
+    "search.useIgnoreFiles": false
 }
