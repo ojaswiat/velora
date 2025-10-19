@@ -213,5 +213,5 @@
         }
     },
     "search.useIgnoreFiles": false,
-    "oxc.enable": false
+    "oxc.enable": true
 }

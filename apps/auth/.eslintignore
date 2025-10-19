@@ -1,0 +1,28 @@
+# Dependencies
+node_modules
+
+# Nuxt generated files
+.nuxt
+.output
+
+# Playground directories
+.playground
+
+# Cache and temporary files
+.cache
+*.tsbuildinfo
+.eslintcache
+
+# Coverage
+coverage
+*.lcov
+
+# Logs
+logs
+*.log
+
+# Environment files
+.env
+.env.*
+!.env.example
+
