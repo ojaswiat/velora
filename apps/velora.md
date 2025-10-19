@@ -1,1 +1,0 @@
-# Basic application for all things Velora + Dashboard

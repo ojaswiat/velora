@@ -1,73 +1,51 @@
-# Nuxt Layer Starter
+# Auth App
 
-Create Nuxt extendable layer with this GitHub template.
+A sample Nuxt application for authentication.
 
 ## Setup
 
-Make sure to install the dependencies:
+Install dependencies:
 
 ```bash
-pnpm install
+bun install
 ```
 
-## Working on your layer
+## Development
 
-Your layer is at the root of this repository, it is exactly like a regular Nuxt project, except you can publish it on NPM.
-
-The `.playground` directory should help you on trying your layer during development.
-
-Running `pnpm dev` will prepare and boot `.playground` directory, which imports your layer itself.
-
-## Distributing your layer
-
-Your Nuxt layer is shaped exactly the same as any other Nuxt project, except you can publish it on NPM.
-
-To do so, you only have to check if `files` in `package.json` are valid, then run:
+Start the development server:
 
 ```bash
-npm publish --access public
+bun dev
 ```
 
-Once done, your users will only have to run:
+## Scripts
 
-```bash
-npm install --save your-layer
-```
-
-Then add the dependency to their `extends` in `nuxt.config`:
-
-```ts
-defineNuxtConfig({
-    extends: "your-layer"
-});
-```
-
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-pnpm dev
-```
+- `bun dev` - Start development server
+- `bun build` - Build for production
+- `bun generate` - Generate static site
+- `bun preview` - Preview production build
+- `bun lint` - Run linters
+- `bun lint:fix` - Fix linting issues
+- `bun typecheck` - Type check the application
 
 ## Production
 
 Build the application for production:
 
 ```bash
-pnpm build
+bun build
 ```
 
-Or statically generate it with:
+Or statically generate it:
 
 ```bash
-pnpm generate
+bun generate
 ```
 
-Locally preview production build:
+Preview the production build locally:
 
 ```bash
-pnpm preview
+bun preview
 ```
 
-Checkout the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Check out the [Nuxt deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

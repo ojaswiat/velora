@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     compatibilityDate: "2025-10-17",
 
     alias: {
-        "#velora-base": resolve("."),
+        "#base": resolve("."),
     },
 
     // Modules

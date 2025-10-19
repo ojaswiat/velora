@@ -1,1 +1,0 @@
-# A rich text editor plugin
