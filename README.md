@@ -771,8 +771,8 @@ const counterStore = useCounterStore();
 
 ## 📄 License
 
-[Add your license here]
+MIT License © 2025
 
 ---
 
-Built with ❤️ using Bun and Nuxt
+Built with ♥️ using Bun and Nuxt
