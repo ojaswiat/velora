@@ -1,5 +1,5 @@
 {
-    // Ensure VSCode uses pnpm instead of npm
+    // Ensure VSCode uses bun instead of npm
     "npm.packageManager": "bun",
     "debug.onTaskErrors": "debugAnyway",
     "diffEditor.ignoreTrimWhitespace": false,
